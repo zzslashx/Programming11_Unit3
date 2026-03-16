@@ -25,10 +25,10 @@ float weight;
 void setup() {
   palette = new color[]{warmYellow, cyan, brightRed, coolYellow, coolBlue, brightOrange, warmGreen, warmBlue, pink, coolGreen, white, ivoryBlack};
 
+pixelDensity(1);
 
-weight = map(sliderY, 350,450,1,10);
 
-sliderY=400;
+sliderY=350;
   size(1000, 800);
 }
 
@@ -37,6 +37,8 @@ void draw() {
   background (white);
   strokeWeight(2.5);
   //StrokeWeight Slider
+    weight = map(sliderY, 350, 450, 1, 10);
+
   textSize(15);
  textAlign(CENTER, CENTER);
 text("Stroke Weight",80,325);
@@ -44,6 +46,8 @@ text("Stroke Weight",80,325);
   text("low", 55,350);
   text("high", 55,450);
   circle(80,sliderY,15);
+  text("Value: ", 125,400);
+  text(nf(weight,0,1), 125,430);
   //Left Panel
   fill(100, 70);
   rect(0, 0, 200, 800);
@@ -132,6 +136,6 @@ void controlSlider(){
   if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450){
   sliderY = mouseY;
   }
-  weight = map(sliderY, 100,700, 0, 255);
+  
 
 }
