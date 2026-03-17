@@ -1,8 +1,8 @@
 //Unit 4 Project!
 //Cheng Cheng
 //stamp images
-PImage lemon, rip;
-boolean lemonOn, ripOn;
+PImage lemon, rip, trash, apple;
+boolean lemonOn, ripOn, appleOn;
 //Colors
 //essential primaries
 color warmYellow= #FFDF00;
@@ -31,11 +31,9 @@ void setup() {
   ripOn=false;
   lemon = loadImage("Lemon.png");
   rip = loadImage("rip.png");
+  trash= loadImage("trash.png");
+  apple = loadImage("apple12.png");
   palette = new color[]{warmYellow, cyan, brightRed, coolYellow, coolBlue, brightOrange, warmGreen, warmBlue, pink, coolGreen, white, ivoryBlack};
-
-
-
-
   sliderY=350;
   size(1000, 800);
 }
@@ -55,36 +53,59 @@ void draw() {
   image(lemon, 200, -5, 100, 100);
   popStyle();
 
- //rip button
+  //rip button
   pushStyle();
   tactile(300, 0, 100, 100);
   ripOnOff();
   rect(300, 0, 100, 100);
   image(rip, 310, 7, 80, 80);
   popStyle();
-  
+
+  //apple button
+  pushStyle();
+  tactile(400, 0, 100, 100);
+  appleOnOff();
+  rect(400, 0, 100, 100);
+  image(apple, 410, 7, 80, 80);
+  popStyle();
+
+  //trash button
+  pushStyle();
+  tactile(900, 700, 100, 100);
+  rect(900, 700, 100, 100);
+  image(trash, 910, 710, 80, 80);
+  popStyle();
+
   //StrokeWeight Slider
-  weight = map(sliderY, 350, 450, 1, 10);
-fill(0);
+  weight = map(sliderY, 350, 450, 1, 20);
+  fill(0);
   textSize(15);
   textAlign(CENTER, CENTER);
   text("Stroke Weight", 80, 325);
+  //slider tactile
+  pushStyle();
+if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
+   strokeWeight(5);
+   stroke(255);
+  }
   line(80, 350, 80, 450);
+   circle(80, sliderY, 15);
+   popStyle();
   text("low", 55, 350);
   text("high", 55, 450);
-  circle(80, sliderY, 15);
+ 
   text("Value: ", 125, 400);
   text(nf(weight, 0, 1), 125, 430);
-  
+
   //Left Panel
   fill(200, 70);
   rect(0, 0, 200, 800);
+  
   //top panel
-  rect(200,0,800,100);
+  rect(200, 0, 800, 110);
   fill(0);
   textSize(30);
-  text("← Stamps",900,50);
-
+  text("← Stamps", 900, 50);
 
   //draw the palette
   for (int i = 0; i < 3; i++) {
@@ -133,7 +154,13 @@ fill(0);
   fill(selectedColor);
   rect(65, 225, 30, 30, 50);
   fill(0);
-
+  
+ //Stroke Indicator
+ //strokeWeight(weight);
+ circle(80,510,weight);
+ strokeWeight(1);
+ 
+ text("size\nof pen ↓",80,480);
 
   text("Your Color: ", 80, 200);
 }
@@ -142,16 +169,19 @@ void mouseDragged() {
   controlSlider();
   stroke(selectedColor);
   strokeWeight(weight);
-  if (lemonOn != true && ripOn!=true) {
+  if (lemonOn != true && ripOn!=true && mouseX>200 && mouseY > 100) {
     //squiggly line
     line(pmouseX, pmouseY, mouseX, mouseY);
-  } 
-  if(lemonOn==true){
-    //lemon drawing
-    image(lemon, mouseX-50, mouseY-50, 100, 100);
   }
-  if(ripOn==true){
-  image(rip, mouseX-50, mouseY-50, 100, 100);
+  if (lemonOn==true&& mouseX>200 && mouseY > 100) {
+    //lemon drawing
+    image(lemon, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+  }
+  if (ripOn==true&& mouseX>200 && mouseY > 100) {
+    image(rip, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+  }
+  if (appleOn==true&& mouseX>200 && mouseY > 100) {
+    image(apple, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
   }
   stroke(0);
 }
@@ -171,16 +201,19 @@ void mousePressed() {
       selectedColor = palette[i];
     }
   }
-   if (lemonOn != true && ripOn!=true) {
+  if (lemonOn != true && ripOn!=true && appleOn!=true && mouseX>200 && mouseY > 100) {
     //squiggly line
     line(pmouseX, pmouseY, mouseX, mouseY);
-  } 
-  if(lemonOn==true){
-    //lemon drawing
-    image(lemon, mouseX-50, mouseY-50, 100, 100);
   }
-  if(ripOn==true){
-  image(rip, mouseX-50, mouseY-50, 100, 100);
+  if (lemonOn==true&& mouseX>200 && mouseY > 100) {
+    //lemon drawing
+    image(lemon, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+  }
+  if (ripOn==true&& mouseX>200 && mouseY > 100) {
+    image(rip, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+  }
+  if (appleOn==true&& mouseX>200 && mouseY > 100) {
+    image(apple, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
   }
 }
 void checkHover(float x, float y) {
@@ -224,14 +257,38 @@ void ripOnOff() {
     strokeWeight(3);
   }
 }
+void appleOnOff() {
+
+  if (appleOn==true) {
+    stroke(255, 0, 0);
+    strokeWeight(6);
+  } else {
+    stroke(0);
+    strokeWeight(3);
+  }
+}
 void mouseReleased() {
   //lemon button
   if ( mouseX > 200 && mouseX <300 && mouseY>0 && mouseY<100) {
 
     lemonOn = !lemonOn;
+    appleOn=false;
+    ripOn=false;
   }
   if ( mouseX > 300 && mouseX <400 && mouseY>0 && mouseY<100) {
 
     ripOn = !ripOn;
+    appleOn= false;
+    lemonOn= false;
+  }
+  if ( mouseX > 400 && mouseX <500 && mouseY>0 && mouseY<100) {
+
+    appleOn = !appleOn;
+    ripOn =false;
+    lemonOn = false;
+  }
+  if ( mouseX > 900 && mouseX <1000 && mouseY>700 && mouseY<800) {
+
+    background(255);
   }
 }
