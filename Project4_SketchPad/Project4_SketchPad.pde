@@ -34,7 +34,7 @@ sliderY=350;
 
 
 void draw() {
-  background (white);
+  //background (white);
   strokeWeight(2.5);
   //StrokeWeight Slider
     weight = map(sliderY, 350, 450, 1, 10);
@@ -107,10 +107,14 @@ text("Stroke Weight",80,325);
 
 void mouseDragged() {
   controlSlider();
+  stroke(selectedColor);
+  line(pmouseX,pmouseY,mouseX,mouseY);
+  stroke(0);
 }
 
 void mousePressed() {
   controlSlider();
+  
   for (int i = 0; i < 12; i++) {
     int col = i % 3;
     int row = i / 3;
