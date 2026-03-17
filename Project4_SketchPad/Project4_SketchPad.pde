@@ -1,8 +1,8 @@
 //Unit 4 Project!
 //Cheng Cheng
 //stamp images
-PImage lemon;
-boolean lemonOn;
+PImage lemon, rip;
+boolean lemonOn, ripOn;
 //Colors
 //essential primaries
 color warmYellow= #FFDF00;
@@ -28,7 +28,9 @@ void setup() {
   background (white);
   pixelDensity(1);
   lemonOn=false;
+  ripOn=false;
   lemon = loadImage("Lemon.png");
+  rip = loadImage("rip.png");
   palette = new color[]{warmYellow, cyan, brightRed, coolYellow, coolBlue, brightOrange, warmGreen, warmBlue, pink, coolGreen, white, ivoryBlack};
 
 
@@ -53,6 +55,14 @@ void draw() {
   image(lemon, 200, -5, 100, 100);
   popStyle();
 
+ //rip button
+  pushStyle();
+  tactile(300, 0, 100, 100);
+  ripOnOff();
+  rect(300, 0, 100, 100);
+  image(rip, 310, 7, 80, 80);
+  popStyle();
+  
   //StrokeWeight Slider
   weight = map(sliderY, 350, 450, 1, 10);
 fill(0);
@@ -132,12 +142,16 @@ void mouseDragged() {
   controlSlider();
   stroke(selectedColor);
   strokeWeight(weight);
-  if (lemonOn != true) {
+  if (lemonOn != true && ripOn!=true) {
     //squiggly line
     line(pmouseX, pmouseY, mouseX, mouseY);
-  } else {
+  } 
+  if(lemonOn==true){
     //lemon drawing
     image(lemon, mouseX-50, mouseY-50, 100, 100);
+  }
+  if(ripOn==true){
+  image(rip, mouseX-50, mouseY-50, 100, 100);
   }
   stroke(0);
 }
@@ -157,13 +171,16 @@ void mousePressed() {
       selectedColor = palette[i];
     }
   }
-  if (lemonOn != true) {
+   if (lemonOn != true && ripOn!=true) {
     //squiggly line
-
     line(pmouseX, pmouseY, mouseX, mouseY);
-  } else {
+  } 
+  if(lemonOn==true){
     //lemon drawing
     image(lemon, mouseX-50, mouseY-50, 100, 100);
+  }
+  if(ripOn==true){
+  image(rip, mouseX-50, mouseY-50, 100, 100);
   }
 }
 void checkHover(float x, float y) {
@@ -197,10 +214,24 @@ void lemonOnOff() {
     strokeWeight(3);
   }
 }
+void ripOnOff() {
+
+  if (ripOn==true) {
+    stroke(255, 0, 0);
+    strokeWeight(6);
+  } else {
+    stroke(0);
+    strokeWeight(3);
+  }
+}
 void mouseReleased() {
   //lemon button
   if ( mouseX > 200 && mouseX <300 && mouseY>0 && mouseY<100) {
 
     lemonOn = !lemonOn;
+  }
+  if ( mouseX > 300 && mouseX <400 && mouseY>0 && mouseY<100) {
+
+    ripOn = !ripOn;
   }
 }
