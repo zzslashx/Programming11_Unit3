@@ -1,5 +1,8 @@
 //Unit 4 Project!
 //Cheng Cheng
+//Sketch Pad
+
+
 //stamp images
 PImage lemon, rip, trash, apple;
 boolean lemonOn, ripOn, appleOn;
@@ -18,7 +21,7 @@ color warmGreen  = #7BB661;
 color coolGreen = #00A86B;
 //white and black
 color pink =  #FF69B4;
-color ivoryBlack = #2C2C2C;
+color ivoryBlack = #000000;
 //Variables
 color selectedColor = ivoryBlack;
 color[] palette;
@@ -169,7 +172,7 @@ void mouseDragged() {
   controlSlider();
   stroke(selectedColor);
   strokeWeight(weight);
-  if (lemonOn != true && ripOn!=true && mouseX>200 && mouseY > 100) {
+  if (lemonOn != true && ripOn!=true && appleOn!=true && mouseX>200 && mouseY > 100) {
     //squiggly line
     line(pmouseX, pmouseY, mouseX, mouseY);
   }
