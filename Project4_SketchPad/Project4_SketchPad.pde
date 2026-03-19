@@ -6,6 +6,10 @@
 //stamp images
 PImage lemon, rip, trash, apple;
 boolean lemonOn, ripOn, appleOn;
+//Pen Type
+int drawType;
+float lastDotX, lastDotY;
+float dotSpacing = 10;
 //Colors
 //essential primaries
 color warmYellow= #FFDF00;
@@ -27,7 +31,8 @@ color selectedColor = ivoryBlack;
 color[] palette;
 float sliderY;
 float weight;
-void setup() {
+
+void setup() {//setup----------------------------------
   background (white);
   pixelDensity(1);
   lemonOn=false;
@@ -39,10 +44,11 @@ void setup() {
   palette = new color[]{warmYellow, cyan, brightRed, coolYellow, coolBlue, brightOrange, warmGreen, warmBlue, pink, coolGreen, white, ivoryBlack};
   sliderY=350;
   size(1000, 800);
-}
+  drawType=1;
+} // end setup---------------------------
 
 
-void draw() {
+void draw() {// draw-----------------------------------------
 
   strokeWeight(2.5);
 
@@ -80,7 +86,7 @@ void draw() {
   popStyle();
 
   //StrokeWeight Slider
-  weight = map(sliderY, 350, 450, 1, 20);
+  //weight set later
   fill(0);
   textSize(15);
   textAlign(CENTER, CENTER);
@@ -164,33 +170,70 @@ if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
  strokeWeight(1);
  
  text("size\nof pen ↓",80,480);
-
   text("Your Color: ", 80, 200);
-}
+  text("Pen Type: ", 80,580);
+  textAlign(TOP,LEFT);
+  text("Dotted", 100,620);
+  tactile(100,600,50,20);
+  rect(100,600,50,20);
+  fill(0);
+   text("Dotted", 102,615);
+    tactile(25,600,50,20);
+    
+  rect(25,600,50,20);
+  fill(0);
+  text("normal", 27,615);
+  textAlign(CENTER,CENTER);
+  if(drawType==1){
+  text("selected type: \n normal", 83.5,645);
+  weight = map(sliderY, 350, 450, 1, 20);
+  }
+  if(drawType==2){
+  text("selected type: \n dotted", 83.5,645);
+  weight = map(sliderY, 350, 450, 5, 25);
+  }
+} // end draw------------------------------------------------------
 
-void mouseDragged() {
+void mouseDragged() {//------------------------------------------
   controlSlider();
   stroke(selectedColor);
   strokeWeight(weight);
   if (lemonOn != true && ripOn!=true && appleOn!=true && mouseX>200 && mouseY > 100) {
     //squiggly line
+    if(drawType==1)
     line(pmouseX, pmouseY, mouseX, mouseY);
+
+    else{
+     float d = dist(mouseX, mouseY, lastDotX, lastDotY);
+      
+      if (d > dotSpacing) {
+        point(mouseX, mouseY);
+        // Update the last dot position to current
+        lastDotX = mouseX;
+        lastDotY = mouseY;
+      }
+    }
+    
   }
   if (lemonOn==true&& mouseX>200 && mouseY > 100) {
     //lemon drawing
-    image(lemon, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+    image(lemon, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
   }
   if (ripOn==true&& mouseX>200 && mouseY > 100) {
-    image(rip, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+    image(rip, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
   }
   if (appleOn==true&& mouseX>200 && mouseY > 100) {
-    image(apple, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+    image(apple, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
   }
   stroke(0);
-}
+}//------------------------------------------
 
-void mousePressed() {
+void mousePressed() {//------------------------------------------
   controlSlider();
+  
+   lastDotX = mouseX;
+  lastDotY = mouseY;
+  
 
   for (int i = 0; i < 12; i++) {
     int col = i % 3;
@@ -206,41 +249,44 @@ void mousePressed() {
   }
   if (lemonOn != true && ripOn!=true && appleOn!=true && mouseX>200 && mouseY > 100) {
     //squiggly line
+    if(drawType==1)
     line(pmouseX, pmouseY, mouseX, mouseY);
+    if(drawType==2)
+     point(mouseX, mouseY);
   }
   if (lemonOn==true&& mouseX>200 && mouseY > 100) {
     //lemon drawing
-    image(lemon, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+    image(lemon, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
   }
   if (ripOn==true&& mouseX>200 && mouseY > 100) {
-    image(rip, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+    image(rip, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
   }
   if (appleOn==true&& mouseX>200 && mouseY > 100) {
-    image(apple, mouseX-50, mouseY-50, weight*5+50, weight*5+50);
+    image(apple, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
   }
-}
-void checkHover(float x, float y) {
+}//------------------------------------------
+void checkHover(float x, float y) {//------------------------------------------
   if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
     stroke(255); // white outline
   } else {
     stroke(0);   // black outline
   }
-}
-void controlSlider() {
+}//------------------------------------------
+void controlSlider() {//------------------------------------------
 
   if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
     sliderY = mouseY;
   }
-}
+}//------------------------------------------
 
-void tactile(int x, int y, int w, int h) {
+void tactile(int x, int y, int w, int h) {//------------------------------------------
   if (mouseX > x && mouseX < x+w && mouseY > y && mouseY < y+h) {
     fill(255, 255, 0);
   } else {
     fill(255);
   }
-}
-void lemonOnOff() {
+}//------------------------------------------
+void lemonOnOff() {//------------------------------------------
 
   if (lemonOn==true) {
     stroke(255, 0, 0);
@@ -249,8 +295,8 @@ void lemonOnOff() {
     stroke(0);
     strokeWeight(3);
   }
-}
-void ripOnOff() {
+}//------------------------------------------
+void ripOnOff() {//------------------------------------------
 
   if (ripOn==true) {
     stroke(255, 0, 0);
@@ -259,8 +305,8 @@ void ripOnOff() {
     stroke(0);
     strokeWeight(3);
   }
-}
-void appleOnOff() {
+}//------------------------------------------
+void appleOnOff() {//------------------------------------------
 
   if (appleOn==true) {
     stroke(255, 0, 0);
@@ -269,8 +315,17 @@ void appleOnOff() {
     stroke(0);
     strokeWeight(3);
   }
-}
-void mouseReleased() {
+}//------------------------------------------
+void mouseReleased() {//------------------------------------------
+   //dotted drawing vs normal
+    if(mouseX>25 && mouseX < 75 && mouseY>600 && mouseY<620){
+  
+  drawType=1; //normal
+  }
+  if(mouseX>100 && mouseX < 150 && mouseY>600 && mouseY<620){
+  
+  drawType=2; // dotted
+  }
   //lemon button
   if ( mouseX > 200 && mouseX <300 && mouseY>0 && mouseY<100) {
 
@@ -294,4 +349,5 @@ void mouseReleased() {
 
     background(255);
   }
-}
+
+}//------------------------------------------
