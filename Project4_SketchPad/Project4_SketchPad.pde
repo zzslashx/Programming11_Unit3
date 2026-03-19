@@ -173,7 +173,6 @@ if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
   text("Your Color: ", 80, 200);
   text("Pen Type: ", 80,580);
   textAlign(TOP,LEFT);
-  text("Dotted", 100,620);
   tactile(100,600,50,20);
   rect(100,600,50,20);
   fill(0);
