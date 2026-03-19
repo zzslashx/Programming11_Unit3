@@ -45,6 +45,7 @@ void setup() {//setup----------------------------------
   sliderY=350;
   size(1000, 800);
   drawType=1;
+  imageMode(CENTER);
 } // end setup---------------------------
 
 
@@ -59,7 +60,7 @@ void draw() {// draw-----------------------------------------
   tactile(200, 0, 100, 100);
   lemonOnOff();
   rect(200, 0, 100, 100);
-  image(lemon, 200, -5, 100, 100);
+  image(lemon, 250, 45, 100, 100);
   popStyle();
 
   //rip button
@@ -67,7 +68,7 @@ void draw() {// draw-----------------------------------------
   tactile(300, 0, 100, 100);
   ripOnOff();
   rect(300, 0, 100, 100);
-  image(rip, 310, 7, 80, 80);
+  image(rip, 350, 50, 80, 80);
   popStyle();
 
   //apple button
@@ -75,14 +76,14 @@ void draw() {// draw-----------------------------------------
   tactile(400, 0, 100, 100);
   appleOnOff();
   rect(400, 0, 100, 100);
-  image(apple, 410, 7, 80, 80);
+  image(apple, 450, 50, 80, 80);
   popStyle();
 
   //trash button
   pushStyle();
   tactile(900, 700, 100, 100);
   rect(900, 700, 100, 100);
-  image(trash, 910, 710, 80, 80);
+  image(trash, 950, 750, 80, 80);
   popStyle();
 
   //StrokeWeight Slider
@@ -216,13 +217,13 @@ void mouseDragged() {//------------------------------------------
   }
   if (lemonOn==true&& mouseX>200 && mouseY > 100) {
     //lemon drawing
-    image(lemon, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
+    image(lemon, mouseX, mouseY, weight*5+50, weight*5+50);
   }
   if (ripOn==true&& mouseX>200 && mouseY > 100) {
-    image(rip, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
+    image(rip, mouseX, mouseY, weight*5+50, weight*5+50);
   }
   if (appleOn==true&& mouseX>200 && mouseY > 100) {
-    image(apple, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
+    image(apple, mouseX, mouseY, weight*5+50, weight*5+50);
   }
   stroke(0);
 }//------------------------------------------
@@ -255,13 +256,13 @@ void mousePressed() {//------------------------------------------
   }
   if (lemonOn==true&& mouseX>200 && mouseY > 100) {
     //lemon drawing
-    image(lemon, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
+    image(lemon, mouseX, mouseY, weight*5+50, weight*5+50);
   }
   if (ripOn==true&& mouseX>200 && mouseY > 100) {
-    image(rip, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
+    image(rip, mouseX, mouseY, weight*5+50, weight*5+50);
   }
   if (appleOn==true&& mouseX>200 && mouseY > 100) {
-    image(apple, mouseX-6*weight, mouseY-6*weight, weight*5+50, weight*5+50);
+    image(apple, mouseX, mouseY, weight*5+50, weight*5+50);
   }
 }//------------------------------------------
 void checkHover(float x, float y) {//------------------------------------------
