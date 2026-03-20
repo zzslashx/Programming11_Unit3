@@ -4,13 +4,15 @@
 
 
 //stamp images
-PImage lemon, rip, trash, apple;
-boolean lemonOn, ripOn, appleOn;
+PImage lemon, rip, trash, apple, cookie, star, moon;
+boolean lemonOn, ripOn, appleOn, cookieOn, starOn, moonOn;
 //Pen Type
 int drawType;
 float lastDotX, lastDotY;
 float dotSpacing = 10;
 //Colors
+//stampBg
+
 //essential primaries
 color warmYellow= #FFDF00;
 color coolYellow = #F1FF5E;
@@ -33,17 +35,25 @@ float sliderY;
 float weight;
 
 void setup() {//setup----------------------------------
+  size(1000, 800);
   background (white);
   pixelDensity(1);
   lemonOn=false;
   ripOn=false;
+  cookieOn=false;
+  starOn = false;
+  moonOn=false;
   lemon = loadImage("Lemon.png");
   rip = loadImage("rip.png");
   trash= loadImage("trash.png");
   apple = loadImage("apple12.png");
+  cookie = loadImage("cookie.png");
+  star = loadImage("star.png");
+  moon = loadImage("moon.png");
+
   palette = new color[]{warmYellow, cyan, brightRed, coolYellow, coolBlue, brightOrange, warmGreen, warmBlue, pink, coolGreen, white, ivoryBlack};
   sliderY=350;
-  size(1000, 800);
+
   drawType=1;
   imageMode(CENTER);
 } // end setup---------------------------
@@ -53,36 +63,55 @@ void draw() {// draw-----------------------------------------
 
   strokeWeight(2.5);
 
-  fill(100, 50);
+
 
   //lemon button
   pushStyle();
-  tactile(200, 0, 100, 100);
   lemonOnOff();
-  rect(200, 0, 100, 100);
+  rectButton(white, 200, 0, 100, 100);
   image(lemon, 250, 45, 100, 100);
   popStyle();
 
+
   //rip button
   pushStyle();
-  tactile(300, 0, 100, 100);
   ripOnOff();
-  rect(300, 0, 100, 100);
+  rectButton(white, 300, 0, 100, 100);
   image(rip, 350, 50, 80, 80);
   popStyle();
 
+
   //apple button
   pushStyle();
-  tactile(400, 0, 100, 100);
   appleOnOff();
-  rect(400, 0, 100, 100);
+  rectButton(white, 400, 0, 100, 100);
   image(apple, 450, 50, 80, 80);
+  popStyle();
+
+  //cookie button
+  pushStyle();
+  cookieOnOff();
+  rectButton(white, 500, 0, 100, 100);
+  image(cookie, 550, 50, 80, 80);
+  popStyle();
+
+  //star button
+  pushStyle();
+  starOnOff();
+  rectButton(white, 600, 0, 100, 100);
+  image(star, 650, 50, 80, 80);
+  popStyle();
+
+  // moon button
+  pushStyle();
+  moonOnOff();
+  rectButton(white, 700, 0, 100, 100);  // next to star
+  image(moon, 750, 50, 80, 80);
   popStyle();
 
   //trash button
   pushStyle();
-  tactile(900, 700, 100, 100);
-  rect(900, 700, 100, 100);
+  circleButton(white, 950, 750, 100);
   image(trash, 950, 750, 80, 80);
   popStyle();
 
@@ -94,23 +123,23 @@ void draw() {// draw-----------------------------------------
   text("Stroke Weight", 80, 325);
   //slider tactile
   pushStyle();
-if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
-   strokeWeight(5);
-   stroke(255);
+  if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
+    strokeWeight(5);
+    stroke(255);
   }
   line(80, 350, 80, 450);
-   circle(80, sliderY, 15);
-   popStyle();
+  circle(80, sliderY, 15);
+  popStyle();
   text("low", 55, 350);
   text("high", 55, 450);
- 
+
   text("Value: ", 125, 400);
   text(nf(weight, 0, 1), 125, 430);
 
   //Left Panel
   fill(200, 70);
   rect(0, 0, 200, 800);
-  
+
   //top panel
   rect(200, 0, 800, 110);
   fill(0);
@@ -164,33 +193,33 @@ if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
   fill(selectedColor);
   rect(65, 225, 30, 30, 50);
   fill(0);
-  
- //Stroke Indicator
- //strokeWeight(weight);
- circle(80,510,weight);
- strokeWeight(1);
- 
- text("size\nof pen ↓",80,480);
+
+  //Stroke Indicator
+  //strokeWeight(weight);
+  circle(80, 510, weight);
+  strokeWeight(1);
+
+  text("size\nof pen ↓", 80, 480);
   text("Your Color: ", 80, 200);
-  text("Pen Type: ", 80,580);
-  textAlign(TOP,LEFT);
-  tactile(100,600,50,20);
-  rect(100,600,50,20);
+  text("Pen Type: ", 80, 580);
+  textAlign(TOP, LEFT);
+  tactileRect(100, 600, 50, 20);
+  rect(100, 600, 50, 20);
   fill(0);
-   text("Dotted", 102,615);
-    tactile(25,600,50,20);
-    
-  rect(25,600,50,20);
+  text("Dotted", 102, 615);
+  tactileRect(25, 600, 50, 20);
+
+  rect(25, 600, 50, 20);
   fill(0);
-  text("normal", 27,615);
-  textAlign(CENTER,CENTER);
-  if(drawType==1){
-  text("selected type: \n normal", 83.5,645);
-  weight = map(sliderY, 350, 450, 1, 20);
+  text("normal", 27, 615);
+  textAlign(CENTER, CENTER);
+  if (drawType==1) {
+    text("selected type: \n normal", 83.5, 645);
+    weight = map(sliderY, 350, 450, 1, 20);
   }
-  if(drawType==2){
-  text("selected type: \n dotted", 83.5,645);
-  weight = map(sliderY, 350, 450, 5, 25);
+  if (drawType==2) {
+    text("selected type: \n dotted", 83.5, 645);
+    weight = map(sliderY, 350, 450, 5, 25);
   }
 } // end draw------------------------------------------------------
 
@@ -198,14 +227,14 @@ void mouseDragged() {//------------------------------------------
   controlSlider();
   stroke(selectedColor);
   strokeWeight(weight);
-  if (lemonOn != true && ripOn!=true && appleOn!=true && mouseX>200 && mouseY > 100) {
+  if (lemonOn != true && ripOn!=true && appleOn!=true && cookieOn!=true && starOn!=true && moonOn!=true && mouseX>200 && mouseY > 100) {
     //squiggly line
-    if(drawType==1)
-    line(pmouseX, pmouseY, mouseX, mouseY);
+    if (drawType==1)
+      line(pmouseX, pmouseY, mouseX, mouseY);
 
-    else{
-     float d = dist(mouseX, mouseY, lastDotX, lastDotY);
-      
+    else {
+      float d = dist(mouseX, mouseY, lastDotX, lastDotY);
+
       if (d > dotSpacing) {
         point(mouseX, mouseY);
         // Update the last dot position to current
@@ -213,7 +242,6 @@ void mouseDragged() {//------------------------------------------
         lastDotY = mouseY;
       }
     }
-    
   }
   if (lemonOn==true&& mouseX>200 && mouseY > 100) {
     //lemon drawing
@@ -225,15 +253,24 @@ void mouseDragged() {//------------------------------------------
   if (appleOn==true&& mouseX>200 && mouseY > 100) {
     image(apple, mouseX, mouseY, weight*5+50, weight*5+50);
   }
+  if (cookieOn==true&& mouseX>200 && mouseY > 100) {
+    image(cookie, mouseX, mouseY, weight*5+50, weight*5+50);
+  }
+  if (starOn && mouseX > 200 && mouseY > 100) {
+    image(star, mouseX, mouseY, weight*5+50, weight*5+50);
+  }
+  if (moonOn && mouseX > 200 && mouseY > 100) {
+  image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
+}
   stroke(0);
 }//------------------------------------------
 
 void mousePressed() {//------------------------------------------
   controlSlider();
-  
-   lastDotX = mouseX;
+
+  lastDotX = mouseX;
   lastDotY = mouseY;
-  
+
 
   for (int i = 0; i < 12; i++) {
     int col = i % 3;
@@ -245,14 +282,15 @@ void mousePressed() {//------------------------------------------
     // Check if the mouse is inside this specific square
     if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
       selectedColor = palette[i];
+      deselectStamps();
     }
   }
-  if (lemonOn != true && ripOn!=true && appleOn!=true && mouseX>200 && mouseY > 100) {
+  if (lemonOn != true && ripOn!=true && appleOn!=true && cookieOn!=true && starOn!=true && moonOn!=true &&mouseX>200 && mouseY > 100) {
     //squiggly line
-    if(drawType==1)
-    line(pmouseX, pmouseY, mouseX, mouseY);
-    if(drawType==2)
-     point(mouseX, mouseY);
+    if (drawType==1)
+      line(pmouseX, pmouseY, mouseX, mouseY);
+    if (drawType==2)
+      point(mouseX, mouseY);
   }
   if (lemonOn==true&& mouseX>200 && mouseY > 100) {
     //lemon drawing
@@ -264,6 +302,15 @@ void mousePressed() {//------------------------------------------
   if (appleOn==true&& mouseX>200 && mouseY > 100) {
     image(apple, mouseX, mouseY, weight*5+50, weight*5+50);
   }
+  if (cookieOn==true&& mouseX>200 && mouseY > 100) {
+    image(cookie, mouseX, mouseY, weight*5+50, weight*5+50);
+  }
+  if (starOn && mouseX > 200 && mouseY > 100) {
+    image(star, mouseX, mouseY, weight*5+50, weight*5+50);
+  }
+  if (moonOn && mouseX > 200 && mouseY > 100) {
+  image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
+}
 }//------------------------------------------
 void checkHover(float x, float y) {//------------------------------------------
   if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
@@ -279,7 +326,7 @@ void controlSlider() {//------------------------------------------
   }
 }//------------------------------------------
 
-void tactile(int x, int y, int w, int h) {//------------------------------------------
+void tactileRect(int x, int y, int w, int h) {//------------------------------------------
   if (mouseX > x && mouseX < x+w && mouseY > y && mouseY < y+h) {
     fill(255, 255, 0);
   } else {
@@ -316,15 +363,43 @@ void appleOnOff() {//------------------------------------------
     strokeWeight(3);
   }
 }//------------------------------------------
-void mouseReleased() {//------------------------------------------
-   //dotted drawing vs normal
-    if(mouseX>25 && mouseX < 75 && mouseY>600 && mouseY<620){
-  
-  drawType=1; //normal
+void cookieOnOff() {//------------------------------------------
+
+  if (cookieOn==true) {
+    stroke(255, 0, 0);
+    strokeWeight(6);
+  } else {
+    stroke(0);
+    strokeWeight(3);
   }
-  if(mouseX>100 && mouseX < 150 && mouseY>600 && mouseY<620){
-  
-  drawType=2; // dotted
+}//------------------------------------------
+void starOnOff() {//------------------------------------------
+  if (starOn) {
+    stroke(255, 0, 0);
+    strokeWeight(6);
+  } else {
+    stroke(0);
+    strokeWeight(3);
+  }
+}//------------------------------------------
+void moonOnOff() {//------------------------------------------
+  if (moonOn) {
+    stroke(255, 0, 0);
+    strokeWeight(6);
+  } else {
+    stroke(0);
+    strokeWeight(3);
+  }
+}//------------------------------------------
+void mouseReleased() {//------------------------------------------
+  //dotted drawing vs normal
+  if (mouseX>25 && mouseX < 75 && mouseY>600 && mouseY<620) {
+
+    drawType=1; //normal
+  }
+  if (mouseX>100 && mouseX < 150 && mouseY>600 && mouseY<620) {
+
+    drawType=2; // dotted
   }
   //lemon button
   if ( mouseX > 200 && mouseX <300 && mouseY>0 && mouseY<100) {
@@ -332,22 +407,84 @@ void mouseReleased() {//------------------------------------------
     lemonOn = !lemonOn;
     appleOn=false;
     ripOn=false;
+    cookieOn=false;
+    starOn=false;
+    moonOn=false;
   }
   if ( mouseX > 300 && mouseX <400 && mouseY>0 && mouseY<100) {
 
     ripOn = !ripOn;
     appleOn= false;
     lemonOn= false;
+    cookieOn=false;
+    starOn=false;
+    moonOn=false;
   }
   if ( mouseX > 400 && mouseX <500 && mouseY>0 && mouseY<100) {
 
     appleOn = !appleOn;
     ripOn =false;
     lemonOn = false;
+    cookieOn=false;
+    starOn=false;
+    moonOn=false;
   }
-  if ( mouseX > 900 && mouseX <1000 && mouseY>700 && mouseY<800) {
+  if ( mouseX > 500 && mouseX <600 && mouseY>0 && mouseY<100) {
 
+    cookieOn = !cookieOn;
+    appleOn=false;
+    ripOn =false;
+    lemonOn = false;
+    starOn=false;
+    moonOn=false;
+  }
+  if (mouseX > 600 && mouseX < 700 && mouseY > 0 && mouseY < 100) {
+    starOn = !starOn;
+    lemonOn = false;
+    ripOn = false;
+    appleOn = false;
+    cookieOn = false;
+    moonOn=false;
+  }
+  if (mouseX > 700 && mouseX < 800 && mouseY > 0 && mouseY < 100) {
+    moonOn = !moonOn;
+    lemonOn = false;
+    ripOn = false;
+    appleOn = false;
+    cookieOn = false;
+    starOn = false;
+  }
+  if (dist(950, 750, mouseX, mouseY)<50) {
     background(255);
   }
-
 }//------------------------------------------
+void tactileCircle(int x, int y, int r) {
+  if (dist(x, y, mouseX, mouseY)<r/2) {
+    stroke(0, 255, 255);
+  } else {
+    stroke(0);
+  }
+}
+
+void rectButton(color fillColor, int x, int y, int w, int h) {
+  pushStyle();
+  tactileRect(x, y, w, h);
+  //fill(fillColor);
+  rect(x, y, w, h);
+  popStyle();
+}
+void circleButton(color fillColor, int x, int y, int r) {
+  pushStyle();
+  tactileCircle(x, y, r);
+  fill(fillColor);
+  circle(x, y, r);
+  popStyle();
+}
+void deselectStamps() {
+  lemonOn = false;
+  ripOn = false;
+  appleOn = false;
+  cookieOn = false;
+  starOn = false;
+  moonOn = false;  
+}
