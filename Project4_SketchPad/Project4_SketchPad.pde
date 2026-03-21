@@ -52,7 +52,7 @@ void setup() {//setup----------------------------------
   moon = loadImage("moon.png");
 
   palette = new color[]{warmYellow, cyan, brightRed, coolYellow, coolBlue, brightOrange, warmGreen, warmBlue, pink, coolGreen, white, ivoryBlack};
-  sliderY=350;
+  sliderY=400;
 
   drawType=1;
   imageMode(CENTER);
@@ -108,119 +108,138 @@ void draw() {// draw-----------------------------------------
   rectButton(white, 700, 0, 100, 100);  // next to star
   image(moon, 750, 50, 80, 80);
   popStyle();
-
-  //trash button
+  // Trash button
   pushStyle();
   circleButton(white, 950, 750, 100);
   image(trash, 950, 750, 80, 80);
   popStyle();
 
-  //StrokeWeight Slider
-  //weight set later
-  fill(0);
-  textSize(15);
-  textAlign(CENTER, CENTER);
-  text("Stroke Weight", 80, 325);
-  //slider tactile
-  pushStyle();
-  if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
-    strokeWeight(5);
-    stroke(255);
-  }
-  line(80, 350, 80, 450);
-  circle(80, sliderY, 15);
-  popStyle();
-  text("low", 55, 350);
-  text("high", 55, 450);
+  // draw top panel
+  fill(200, 70);  // semi-transparent gray
+  stroke(0);
+  rect(200, 0, 800, 110);
 
-  text("Value: ", 125, 400);
-  text(nf(weight, 0, 1), 125, 430);
+  fill(0);        // black text
+  textSize(30);
+  text("← Stamps", 900, 50);
 
   //Left Panel
   fill(200, 70);
   rect(0, 0, 200, 800);
 
-  //top panel
-  rect(200, 0, 800, 110);
-  fill(0);
-  textSize(30);
-  text("← Stamps", 900, 50);
 
-  //draw the palette
+
+  //palette panel
+  fill(255, 30);
+  rect(10, 20, 180, 180, 10);
+
+  // Draw the color palette
   for (int i = 0; i < 3; i++) {
-
-    int x = 35 + (i * (25 + 15));
-    int y = 50;
+    int x = 45 + (i * (25 + 15));
+    int y = 60;
     checkHover(x, y);
     fill(palette[i]);
     rect(x, y, 25, 25, 6.7);
   }
 
   for (int i = 3; i < 6; i++) {
-
-    int x = 35 + ((i-3) * (25 + 15));
-    int y = 80;
+    int x = 45 + ((i - 3) * (25 + 15));
+    int y = 90;
     fill(palette[i]);
     checkHover(x, y);
     rect(x, y, 25, 25, 6.7);
   }
+
   for (int i = 6; i < 9; i++) {
-
-    int x = 35 + ((i-6) * (25 + 15));
-    int y = 110;
+    int x = 45 + ((i - 6) * (25 + 15));
+    int y = 120;
     fill(palette[i]);
     checkHover(x, y);
     rect(x, y, 25, 25, 6.7);
   }
+
   for (int i = 9; i < 12; i++) {
-
-    int x = 35 + ((i-9) * (25 + 15));
-    int y = 140;
+    int x = 45 + ((i - 9) * (25 + 15));
+    int y = 150;
     fill(palette[i]);
     checkHover(x, y);
     rect(x, y, 25, 25, 6.7);
-    stroke(0);
   }
 
-  //palette panel
+  stroke(0);
   fill(0);
   textSize(15);
   textAlign(CENTER, CENTER);
-  text("Click To Pick", 80, 15);
-  fill(255, 50);
-  square(20, 35, 140);
-  //indicator
+  text("Click To Pick", 100, 40);
+
+  //indicator section
+  fill(255, 30);
+  rect(10, 210, 180, 100, 10);
+
+  fill(0);
+  text("Your Color + weight:", 100, 230);
   fill(selectedColor);
-  rect(65, 225, 30, 30, 50);
-  fill(0);
+  circle(90, 260, weight);
 
-  //Stroke Indicator
-  //strokeWeight(weight);
-  circle(80, 510, weight);
-  strokeWeight(1);
+  //StrokeWeight Slider
+  fill(255, 30);
+  rect(10, 320, 180, 200, 10);
 
-  text("size\nof pen ↓", 80, 480);
-  text("Your Color: ", 80, 200);
-  text("Pen Type: ", 80, 580);
-  textAlign(TOP, LEFT);
-  tactileRect(100, 600, 50, 20);
-  rect(100, 600, 50, 20);
   fill(0);
-  text("Dotted", 102, 615);
-  tactileRect(25, 600, 50, 20);
+  text("Stroke Weight", 100, 340);
 
-  rect(25, 600, 50, 20);
+  pushStyle();
+  if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
+    strokeWeight(5);
+    stroke(255);
+  }
+  line(80, 370, 80, 470);
+  circle(80, sliderY, 15);
+  popStyle();
+
+  text("low", 120, 370);
+  text("high", 120, 470);
+  text("Value: " + nf(weight, 0, 1), 100, 500);
+
+
+
+  //Pen Type:
+  fill(255, 30);
+  rect(10, 540, 180, 120, 10);
+
   fill(0);
-  text("normal", 27, 615);
-  textAlign(CENTER, CENTER);
+  text("Pen Type:", 100, 560);
+
+  tactileRect(30, 580, 60, 30);
+  rect(30, 580, 60, 30);
+  fill(0);
+  text("normal", 60, 595);
+
+  tactileRect(110, 580, 60, 30);
+  rect(110, 580, 60, 30);
+  fill(0);
+  text("Dotted", 140, 595);
+
   if (drawType==1) {
-    text("selected type: \n normal", 83.5, 645);
-    weight = map(sliderY, 350, 450, 1, 20);
+    text("selected: normal", 100, 630);
+    weight = map(sliderY, 370, 470, 1, 20);
   }
   if (drawType==2) {
-    text("selected type: \n dotted", 83.5, 645);
-    weight = map(sliderY, 350, 450, 5, 25);
+    text("selected: dotted", 100, 630);
+    weight = map(sliderY, 370, 470, 1, 20);
   }
+
+  //save button
+  strokeWeight(3);
+  stroke(0);
+  rectButton(1, 40, 700, 120, 30);
+  fill(0);
+  text("save", 100, 715);
+
+  //load button
+  rectButton(1, 40, 740, 120, 30);
+  fill(0);
+  text("load", 100, 755);
 } // end draw------------------------------------------------------
 
 void mouseDragged() {//------------------------------------------
@@ -260,8 +279,8 @@ void mouseDragged() {//------------------------------------------
     image(star, mouseX, mouseY, weight*5+50, weight*5+50);
   }
   if (moonOn && mouseX > 200 && mouseY > 100) {
-  image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
-}
+    image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
+  }
   stroke(0);
 }//------------------------------------------
 
@@ -271,20 +290,44 @@ void mousePressed() {//------------------------------------------
   lastDotX = mouseX;
   lastDotY = mouseY;
 
-
-  for (int i = 0; i < 12; i++) {
-    int col = i % 3;
-    int row = i / 3;
-
-    float x = 35 + (col * 40);
-    float y = 50 + (row * 30);
-
-    // Check if the mouse is inside this specific square
+  // check which color mouse hits
+  for (int i = 0; i < 3; i++) {
+    int x = 45 + (i * (25 + 15));
+    int y = 60;
     if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
       selectedColor = palette[i];
       deselectStamps();
     }
   }
+
+  for (int i = 3; i < 6; i++) {
+    int x = 45 + ((i - 3) * (25 + 15));
+    int y = 90;
+    if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
+      selectedColor = palette[i];
+      deselectStamps();
+    }
+  }
+
+  for (int i = 6; i < 9; i++) {
+    int x = 45 + ((i - 6) * (25 + 15));
+    int y = 120;
+    if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
+      selectedColor = palette[i];
+      deselectStamps();
+    }
+  }
+
+  for (int i = 9; i < 12; i++) {
+    int x = 45 + ((i - 9) * (25 + 15));
+    int y = 150;
+    if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
+      selectedColor = palette[i];
+      deselectStamps();
+    }
+  }
+
+
   if (lemonOn != true && ripOn!=true && appleOn!=true && cookieOn!=true && starOn!=true && moonOn!=true &&mouseX>200 && mouseY > 100) {
     //squiggly line
     if (drawType==1)
@@ -309,8 +352,8 @@ void mousePressed() {//------------------------------------------
     image(star, mouseX, mouseY, weight*5+50, weight*5+50);
   }
   if (moonOn && mouseX > 200 && mouseY > 100) {
-  image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
-}
+    image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
+  }
 }//------------------------------------------
 void checkHover(float x, float y) {//------------------------------------------
   if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
@@ -321,7 +364,7 @@ void checkHover(float x, float y) {//------------------------------------------
 }//------------------------------------------
 void controlSlider() {//------------------------------------------
 
-  if (mouseX>50 && mouseX <110 && mouseY > 350 && mouseY < 450) {
+  if (mouseX>50 && mouseX <110 && mouseY > 370 && mouseY < 470) {
     sliderY = mouseY;
   }
 }//------------------------------------------
@@ -393,11 +436,11 @@ void moonOnOff() {//------------------------------------------
 }//------------------------------------------
 void mouseReleased() {//------------------------------------------
   //dotted drawing vs normal
-  if (mouseX>25 && mouseX < 75 && mouseY>600 && mouseY<620) {
+  if (mouseX>30 && mouseX < 90 && mouseY>580 && mouseY<610) {
 
     drawType=1; //normal
   }
-  if (mouseX>100 && mouseX < 150 && mouseY>600 && mouseY<620) {
+  if (mouseX>110 && mouseX < 170 && mouseY>580 && mouseY<610) {
 
     drawType=2; // dotted
   }
@@ -411,6 +454,7 @@ void mouseReleased() {//------------------------------------------
     starOn=false;
     moonOn=false;
   }
+  //wilted rose button
   if ( mouseX > 300 && mouseX <400 && mouseY>0 && mouseY<100) {
 
     ripOn = !ripOn;
@@ -420,6 +464,7 @@ void mouseReleased() {//------------------------------------------
     starOn=false;
     moonOn=false;
   }
+  //apple button
   if ( mouseX > 400 && mouseX <500 && mouseY>0 && mouseY<100) {
 
     appleOn = !appleOn;
@@ -429,6 +474,7 @@ void mouseReleased() {//------------------------------------------
     starOn=false;
     moonOn=false;
   }
+  //cookie button
   if ( mouseX > 500 && mouseX <600 && mouseY>0 && mouseY<100) {
 
     cookieOn = !cookieOn;
@@ -438,6 +484,7 @@ void mouseReleased() {//------------------------------------------
     starOn=false;
     moonOn=false;
   }
+  //apple button
   if (mouseX > 600 && mouseX < 700 && mouseY > 0 && mouseY < 100) {
     starOn = !starOn;
     lemonOn = false;
@@ -446,6 +493,7 @@ void mouseReleased() {//------------------------------------------
     cookieOn = false;
     moonOn=false;
   }
+  //draw moon stamp
   if (mouseX > 700 && mouseX < 800 && mouseY > 0 && mouseY < 100) {
     moonOn = !moonOn;
     lemonOn = false;
@@ -454,10 +502,35 @@ void mouseReleased() {//------------------------------------------
     cookieOn = false;
     starOn = false;
   }
+  //trash button
   if (dist(950, 750, mouseX, mouseY)<50) {
-    background(255);
+    //background(255);
+    fill(white);
+    rect(200, 110, 800, 800);
   }
+  //save button
+  // 70, 730, 50, 25
+  if (mouseX >40 && mouseX<160 && mouseY > 700 && mouseY<730)
+    selectOutput ("Choose a name your new image file", "saveImage");
+  //load button
+  // 70, 760, 50, 25
+  if (mouseX >40 && mouseX<160 && mouseY > 740 && mouseY<770)
+    selectInput ("Pick an image to load", "openImage");
 }//------------------------------------------
+void openImage(File f) {
+  if (f != null) {
+    PImage pic = loadImage(f.getPath());
+
+
+    image(pic, width/2 + 100, height/2 + 50);
+  }
+}
+void saveImage(File f) {
+  if (f!=null) {
+    PImage canvas = get(71, 1, width-71, height-1);
+    canvas.save(f.getAbsolutePath());
+  }
+}
 void tactileCircle(int x, int y, int r) {
   if (dist(x, y, mouseX, mouseY)<r/2) {
     stroke(0, 255, 255);
@@ -469,7 +542,7 @@ void tactileCircle(int x, int y, int r) {
 void rectButton(color fillColor, int x, int y, int w, int h) {
   pushStyle();
   tactileRect(x, y, w, h);
-  //fill(fillColor);
+
   rect(x, y, w, h);
   popStyle();
 }
@@ -486,5 +559,5 @@ void deselectStamps() {
   appleOn = false;
   cookieOn = false;
   starOn = false;
-  moonOn = false;  
+  moonOn = false;
 }
