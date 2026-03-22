@@ -362,38 +362,38 @@ void mouseReleased() {//------------------------------------------
   }
   //apple button
   if ( mouseX > 400 && mouseX <500 && mouseY>0 && mouseY<100) {
-    if(appleOn==true)
-    appleOn=false;
-    else{
-    deselectStamps();
-    appleOn = !appleOn;
+    if (appleOn==true)
+      appleOn=false;
+    else {
+      deselectStamps();
+      appleOn = !appleOn;
     }
   }
   //cookie button
   if ( mouseX > 500 && mouseX <600 && mouseY>0 && mouseY<100) {
-    if(cookieOn==true)
-    cookieOn=false;
-    else{
-    deselectStamps();
-    cookieOn = !cookieOn;
+    if (cookieOn==true)
+      cookieOn=false;
+    else {
+      deselectStamps();
+      cookieOn = !cookieOn;
     }
   }
   //star button
   if (mouseX > 600 && mouseX < 700 && mouseY > 0 && mouseY < 100) {
-    if(starOn==true)
-    starOn=false;
-    else{
-    deselectStamps();
-    starOn = !starOn;
+    if (starOn==true)
+      starOn=false;
+    else {
+      deselectStamps();
+      starOn = !starOn;
     }
   }
   //moon button
   if (mouseX > 700 && mouseX < 800 && mouseY > 0 && mouseY < 100) {
-    if(moonOn==true)
-    moonOn=false;
-    else{
-    deselectStamps();
-    moonOn = !moonOn;
+    if (moonOn==true)
+      moonOn=false;
+    else {
+      deselectStamps();
+      moonOn = !moonOn;
     }
   }
   //trash button
