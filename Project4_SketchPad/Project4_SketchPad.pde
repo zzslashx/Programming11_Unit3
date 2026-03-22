@@ -3,6 +3,8 @@
 //Sketch Pad
 
 
+
+
 //stamp images
 PImage lemon, rip, trash, apple, cookie, star, moon;
 boolean lemonOn, ripOn, appleOn, cookieOn, starOn, moonOn;
@@ -67,7 +69,7 @@ void draw() {// draw-----------------------------------------
 
   //lemon button
   pushStyle();
-  lemonOnOff();
+  stampBorder(lemonOn);
   rectButton(white, 200, 0, 100, 100);
   image(lemon, 250, 45, 100, 100);
   popStyle();
@@ -75,7 +77,7 @@ void draw() {// draw-----------------------------------------
 
   //rip button
   pushStyle();
-  ripOnOff();
+  stampBorder(ripOn);
   rectButton(white, 300, 0, 100, 100);
   image(rip, 350, 50, 80, 80);
   popStyle();
@@ -83,28 +85,28 @@ void draw() {// draw-----------------------------------------
 
   //apple button
   pushStyle();
-  appleOnOff();
+  stampBorder(appleOn);
   rectButton(white, 400, 0, 100, 100);
   image(apple, 450, 50, 80, 80);
   popStyle();
 
   //cookie button
   pushStyle();
-  cookieOnOff();
+  stampBorder(cookieOn);
   rectButton(white, 500, 0, 100, 100);
   image(cookie, 550, 50, 80, 80);
   popStyle();
 
   //star button
   pushStyle();
-  starOnOff();
+  stampBorder(starOn);
   rectButton(white, 600, 0, 100, 100);
   image(star, 650, 50, 80, 80);
   popStyle();
 
   // moon button
   pushStyle();
-  moonOnOff();
+  stampBorder(moonOn);
   rectButton(white, 700, 0, 100, 100);  // next to star
   image(moon, 750, 50, 80, 80);
   popStyle();
@@ -134,37 +136,38 @@ void draw() {// draw-----------------------------------------
   rect(10, 20, 180, 180, 10);
 
   // Draw the color palette
-  for (int i = 0; i < 3; i++) {
-    int x = 45 + (i * (25 + 15));
-    int y = 60;
-    checkHover(x, y);
-    fill(palette[i]);
-    rect(x, y, 25, 25, 6.7);
-  }
-
-  for (int i = 3; i < 6; i++) {
-    int x = 45 + ((i - 3) * (25 + 15));
-    int y = 90;
-    fill(palette[i]);
-    checkHover(x, y);
-    rect(x, y, 25, 25, 6.7);
-  }
-
-  for (int i = 6; i < 9; i++) {
-    int x = 45 + ((i - 6) * (25 + 15));
-    int y = 120;
-    fill(palette[i]);
-    checkHover(x, y);
-    rect(x, y, 25, 25, 6.7);
-  }
-
-  for (int i = 9; i < 12; i++) {
-    int x = 45 + ((i - 9) * (25 + 15));
-    int y = 150;
-    fill(palette[i]);
-    checkHover(x, y);
-    rect(x, y, 25, 25, 6.7);
-  }
+  draw1Row(0, 3, 60);
+  //for (int i = 0; i < 3; i++) {
+  //  int x = 45 + (i * (25 + 15));
+  //  int y = 60;
+  //  checkHover(x, y);
+  //  fill(palette[i]);
+  //  rect(x, y, 25, 25, 6.7);
+  //}
+  draw1Row(3, 6, 90);
+  //for (int i = 3; i < 6; i++) {
+  //  int x = 45 + ((i - 3) * (25 + 15));
+  //  int y = 90;
+  //  fill(palette[i]);
+  //  checkHover(x, y);
+  //  rect(x, y, 25, 25, 6.7);
+  //}
+  draw1Row(6, 9, 120);
+  //for (int i = 6; i < 9; i++) {
+  //  int x = 45 + ((i - 6) * (25 + 15));
+  //  int y = 120;
+  //  fill(palette[i]);
+  //  checkHover(x, y);
+  //  rect(x, y, 25, 25, 6.7);
+  //}
+  draw1Row(9, 12, 150);
+  //for (int i = 9; i < 12; i++) {
+  //  int x = 45 + ((i - 9) * (25 + 15));
+  //  int y = 150;
+  //  fill(palette[i]);
+  //  checkHover(x, y);
+  //  rect(x, y, 25, 25, 6.7);
+  //}
 
   stroke(0);
   fill(0);
@@ -175,11 +178,13 @@ void draw() {// draw-----------------------------------------
   //indicator section
   fill(255, 30);
   rect(10, 210, 180, 100, 10);
-
+  pushStyle();
+  strokeWeight(1);
   fill(0);
   text("Your Color + weight:", 100, 230);
   fill(selectedColor);
   circle(90, 260, weight);
+  popStyle();
 
   //StrokeWeight Slider
   fill(255, 30);
@@ -247,40 +252,16 @@ void mouseDragged() {//------------------------------------------
   stroke(selectedColor);
   strokeWeight(weight);
   if (lemonOn != true && ripOn!=true && appleOn!=true && cookieOn!=true && starOn!=true && moonOn!=true && mouseX>200 && mouseY > 100) {
-    //squiggly line
-    if (drawType==1)
-      line(pmouseX, pmouseY, mouseX, mouseY);
-
-    else {
-      float d = dist(mouseX, mouseY, lastDotX, lastDotY);
-
-      if (d > dotSpacing) {
-        point(mouseX, mouseY);
-        // Update the last dot position to current
-        lastDotX = mouseX;
-        lastDotY = mouseY;
-      }
-    }
+    //pen draw
+    drawLineOrDots();
   }
-  if (lemonOn==true&& mouseX>200 && mouseY > 100) {
-    //lemon drawing
-    image(lemon, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (ripOn==true&& mouseX>200 && mouseY > 100) {
-    image(rip, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (appleOn==true&& mouseX>200 && mouseY > 100) {
-    image(apple, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (cookieOn==true&& mouseX>200 && mouseY > 100) {
-    image(cookie, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (starOn && mouseX > 200 && mouseY > 100) {
-    image(star, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (moonOn && mouseX > 200 && mouseY > 100) {
-    image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
+  //stamps
+  drawStamp(lemon, lemonOn);
+  drawStamp(rip, ripOn);
+  drawStamp(apple, appleOn);
+  drawStamp(cookie, cookieOn);
+  drawStamp(star, starOn);
+  drawStamp(moon, moonOn);
   stroke(0);
 }//------------------------------------------
 
@@ -290,69 +271,35 @@ void mousePressed() {//------------------------------------------
   lastDotX = mouseX;
   lastDotY = mouseY;
 
-  // check which color mouse hits
-  for (int i = 0; i < 3; i++) {
-    int x = 45 + (i * (25 + 15));
-    int y = 60;
-    if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
-      selectedColor = palette[i];
-      deselectStamps();
-    }
-  }
-
-  for (int i = 3; i < 6; i++) {
-    int x = 45 + ((i - 3) * (25 + 15));
-    int y = 90;
-    if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
-      selectedColor = palette[i];
-      deselectStamps();
-    }
-  }
-
-  for (int i = 6; i < 9; i++) {
-    int x = 45 + ((i - 6) * (25 + 15));
-    int y = 120;
-    if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
-      selectedColor = palette[i];
-      deselectStamps();
-    }
-  }
-
-  for (int i = 9; i < 12; i++) {
-    int x = 45 + ((i - 9) * (25 + 15));
-    int y = 150;
-    if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
-      selectedColor = palette[i];
-      deselectStamps();
-    }
-  }
-
+  //checks which color the mouse hits when prssed
+  checkColorRow(0, 3, 60);
+  checkColorRow(3, 6, 90);
+  checkColorRow(6, 9, 120);
+  checkColorRow(9, 12, 150);
 
   if (lemonOn != true && ripOn!=true && appleOn!=true && cookieOn!=true && starOn!=true && moonOn!=true &&mouseX>200 && mouseY > 100) {
-    //squiggly line
-    if (drawType==1)
-      line(pmouseX, pmouseY, mouseX, mouseY);
-    if (drawType==2)
-      point(mouseX, mouseY);
-  }
-  if (lemonOn==true&& mouseX>200 && mouseY > 100) {
-    //lemon drawing
-    image(lemon, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (ripOn==true&& mouseX>200 && mouseY > 100) {
-    image(rip, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (appleOn==true&& mouseX>200 && mouseY > 100) {
-    image(apple, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (cookieOn==true&& mouseX>200 && mouseY > 100) {
-    image(cookie, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (starOn && mouseX > 200 && mouseY > 100) {
-    image(star, mouseX, mouseY, weight*5+50, weight*5+50);
-  }
-  if (moonOn && mouseX > 200 && mouseY > 100) {
-    image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
+    //pen draw
+    drawLineOrDots();
+
+    if (lemonOn==true&& mouseX>200 && mouseY > 100) {
+      //lemon drawing
+      image(lemon, mouseX, mouseY, weight*5+50, weight*5+50);
+    }
+    if (ripOn==true&& mouseX>200 && mouseY > 100) {
+      image(rip, mouseX, mouseY, weight*5+50, weight*5+50);
+    }
+    if (appleOn==true&& mouseX>200 && mouseY > 100) {
+      image(apple, mouseX, mouseY, weight*5+50, weight*5+50);
+    }
+    if (cookieOn==true&& mouseX>200 && mouseY > 100) {
+      image(cookie, mouseX, mouseY, weight*5+50, weight*5+50);
+    }
+    if (starOn && mouseX > 200 && mouseY > 100) {
+      image(star, mouseX, mouseY, weight*5+50, weight*5+50);
+    }
+    if (moonOn && mouseX > 200 && mouseY > 100) {
+      image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
+    }
   }
 }//------------------------------------------
 void checkHover(float x, float y) {//------------------------------------------
@@ -376,57 +323,8 @@ void tactileRect(int x, int y, int w, int h) {//--------------------------------
     fill(255);
   }
 }//------------------------------------------
-void lemonOnOff() {//------------------------------------------
-
-  if (lemonOn==true) {
-    stroke(255, 0, 0);
-    strokeWeight(6);
-  } else {
-    stroke(0);
-    strokeWeight(3);
-  }
-}//------------------------------------------
-void ripOnOff() {//------------------------------------------
-
-  if (ripOn==true) {
-    stroke(255, 0, 0);
-    strokeWeight(6);
-  } else {
-    stroke(0);
-    strokeWeight(3);
-  }
-}//------------------------------------------
-void appleOnOff() {//------------------------------------------
-
-  if (appleOn==true) {
-    stroke(255, 0, 0);
-    strokeWeight(6);
-  } else {
-    stroke(0);
-    strokeWeight(3);
-  }
-}//------------------------------------------
-void cookieOnOff() {//------------------------------------------
-
-  if (cookieOn==true) {
-    stroke(255, 0, 0);
-    strokeWeight(6);
-  } else {
-    stroke(0);
-    strokeWeight(3);
-  }
-}//------------------------------------------
-void starOnOff() {//------------------------------------------
-  if (starOn) {
-    stroke(255, 0, 0);
-    strokeWeight(6);
-  } else {
-    stroke(0);
-    strokeWeight(3);
-  }
-}//------------------------------------------
-void moonOnOff() {//------------------------------------------
-  if (moonOn) {
+void stampBorder(boolean isOn) {
+  if (isOn) {
     stroke(255, 0, 0);
     strokeWeight(6);
   } else {
@@ -446,61 +344,57 @@ void mouseReleased() {//------------------------------------------
   }
   //lemon button
   if ( mouseX > 200 && mouseX <300 && mouseY>0 && mouseY<100) {
-
-    lemonOn = !lemonOn;
-    appleOn=false;
-    ripOn=false;
-    cookieOn=false;
-    starOn=false;
-    moonOn=false;
+    if (lemonOn==true)
+      lemonOn=false;
+    else {
+      deselectStamps();
+      lemonOn = !lemonOn;
+    }
   }
   //wilted rose button
   if ( mouseX > 300 && mouseX <400 && mouseY>0 && mouseY<100) {
-
-    ripOn = !ripOn;
-    appleOn= false;
-    lemonOn= false;
-    cookieOn=false;
-    starOn=false;
-    moonOn=false;
+    if (ripOn==true)
+      ripOn=false;
+    else {
+      deselectStamps();
+      ripOn = !ripOn;
+    }
   }
   //apple button
   if ( mouseX > 400 && mouseX <500 && mouseY>0 && mouseY<100) {
-
+    if(appleOn==true)
+    appleOn=false;
+    else{
+    deselectStamps();
     appleOn = !appleOn;
-    ripOn =false;
-    lemonOn = false;
-    cookieOn=false;
-    starOn=false;
-    moonOn=false;
+    }
   }
   //cookie button
   if ( mouseX > 500 && mouseX <600 && mouseY>0 && mouseY<100) {
-
+    if(cookieOn==true)
+    cookieOn=false;
+    else{
+    deselectStamps();
     cookieOn = !cookieOn;
-    appleOn=false;
-    ripOn =false;
-    lemonOn = false;
-    starOn=false;
-    moonOn=false;
+    }
   }
-  //apple button
+  //star button
   if (mouseX > 600 && mouseX < 700 && mouseY > 0 && mouseY < 100) {
+    if(starOn==true)
+    starOn=false;
+    else{
+    deselectStamps();
     starOn = !starOn;
-    lemonOn = false;
-    ripOn = false;
-    appleOn = false;
-    cookieOn = false;
-    moonOn=false;
+    }
   }
-  //draw moon stamp
+  //moon button
   if (mouseX > 700 && mouseX < 800 && mouseY > 0 && mouseY < 100) {
+    if(moonOn==true)
+    moonOn=false;
+    else{
+    deselectStamps();
     moonOn = !moonOn;
-    lemonOn = false;
-    ripOn = false;
-    appleOn = false;
-    cookieOn = false;
-    starOn = false;
+    }
   }
   //trash button
   if (dist(950, 750, mouseX, mouseY)<50) {
@@ -520,9 +414,7 @@ void mouseReleased() {//------------------------------------------
 void openImage(File f) {
   if (f != null) {
     PImage pic = loadImage(f.getPath());
-
-
-    image(pic, width/2 + 100, height/2 + 50);
+    image(pic, width/2 + 100, height/2 + 50, 400, 400);
   }
 }
 void saveImage(File f) {
@@ -560,4 +452,42 @@ void deselectStamps() {
   cookieOn = false;
   starOn = false;
   moonOn = false;
+}
+
+
+
+void draw1Row(int start, int end, int y) {
+  for (int i = start; i < end; i++) {
+    int x = 45 + ((i - start) * (25 + 15));
+    checkHover(x, y);
+    fill(palette[i]);
+    rect(x, y, 25, 25, 6.7);
+  }
+}
+void checkColorRow(int start, int end, int y) {
+  for (int i = start; i < end; i++) {
+    int x = 45 + ((i - start) * (25 + 15)); // same fix as before
+
+    if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
+      selectedColor = palette[i];
+      deselectStamps();
+    }
+  }
+}
+void drawStamp(PImage img, boolean isOn) {
+  if (isOn && mouseX > 200 && mouseY > 100) {
+    image(img, mouseX, mouseY, weight*5+50, weight*5+50);
+  }
+}
+void drawLineOrDots() {
+  if (drawType == 1) {
+    line(pmouseX, pmouseY, mouseX, mouseY);
+  } else {
+    float d = dist(mouseX, mouseY, lastDotX, lastDotY);
+    if (d > dotSpacing) {
+      point(mouseX, mouseY);
+      lastDotX = mouseX;
+      lastDotY = mouseY;
+    }
+  }
 }
