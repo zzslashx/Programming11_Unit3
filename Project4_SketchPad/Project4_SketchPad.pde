@@ -280,6 +280,7 @@ void mousePressed() {//------------------------------------------
   if (lemonOn != true && ripOn!=true && appleOn!=true && cookieOn!=true && starOn!=true && moonOn!=true &&mouseX>200 && mouseY > 100) {
     //pen draw
     drawLineOrDots();
+  }
 
     if (lemonOn==true&& mouseX>200 && mouseY > 100) {
       //lemon drawing
@@ -300,7 +301,7 @@ void mousePressed() {//------------------------------------------
     if (moonOn && mouseX > 200 && mouseY > 100) {
       image(moon, mouseX, mouseY, weight*5+50, weight*5+50);
     }
-  }
+
 }//------------------------------------------
 void checkHover(float x, float y) {//------------------------------------------
   if (mouseX > x && mouseX < x + 25 && mouseY > y && mouseY < y + 25) {
