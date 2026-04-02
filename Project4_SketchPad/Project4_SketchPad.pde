@@ -137,37 +137,10 @@ void draw() {// draw-----------------------------------------
 
   // Draw the color palette
   draw1Row(0, 3, 60);
-  //for (int i = 0; i < 3; i++) {
-  //  int x = 45 + (i * (25 + 15));
-  //  int y = 60;
-  //  checkHover(x, y);
-  //  fill(palette[i]);
-  //  rect(x, y, 25, 25, 6.7);
-  //}
   draw1Row(3, 6, 90);
-  //for (int i = 3; i < 6; i++) {
-  //  int x = 45 + ((i - 3) * (25 + 15));
-  //  int y = 90;
-  //  fill(palette[i]);
-  //  checkHover(x, y);
-  //  rect(x, y, 25, 25, 6.7);
-  //}
   draw1Row(6, 9, 120);
-  //for (int i = 6; i < 9; i++) {
-  //  int x = 45 + ((i - 6) * (25 + 15));
-  //  int y = 120;
-  //  fill(palette[i]);
-  //  checkHover(x, y);
-  //  rect(x, y, 25, 25, 6.7);
-  //}
   draw1Row(9, 12, 150);
-  //for (int i = 9; i < 12; i++) {
-  //  int x = 45 + ((i - 9) * (25 + 15));
-  //  int y = 150;
-  //  fill(palette[i]);
-  //  checkHover(x, y);
-  //  rect(x, y, 25, 25, 6.7);
-  //}
+
 
   stroke(0);
   fill(0);
@@ -183,7 +156,13 @@ void draw() {// draw-----------------------------------------
   fill(0);
   text("Your Color + weight:", 100, 230);
   fill(selectedColor);
-  circle(90, 260, weight);
+  circle(90, 270, 30);
+  if(selectedColor==ivoryBlack)
+  fill(255);
+  else{
+  fill(0);
+  }
+  circle(90,270,weight);
   popStyle();
 
   //StrokeWeight Slider
