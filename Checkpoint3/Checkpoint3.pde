@@ -18,7 +18,7 @@ void setup() {
 
 void draw() {
   background(22,29,100);
-  if (mouseX>375 && mouseX <425 && mouseY < 700 && mouseY > 100){
+  if (mouseX>365 && mouseX <435 && mouseY < 700 && mouseY > 100){
   stroke(255);
   }
   else{
@@ -45,7 +45,7 @@ controlSlider();
 }
 void controlSlider(){
 
-  if (mouseX>375 && mouseX <425 && mouseY < 700 && mouseY > 100){
+  if (mouseX>365 && mouseX <435 && mouseY < 700 && mouseY > 100){
   sliderY = mouseY;
   }
   dia = map(sliderY, 100,700, 0, 255);
