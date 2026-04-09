@@ -22,13 +22,13 @@ color white =  #F9F6F0;
 color cyan =   #00FFFF;
 color warmBlue = #180A8F;
 color coolBlue= #0055A4;
+color pink =  #FF69B4;
 //Earth Tones
 color brightRed = #FF0000;
 color brightOrange = #FF5F1F;
 color warmGreen  = #7BB661;
 color coolGreen = #00A86B;
-//white and black
-color pink =  #FF69B4;
+//black
 color ivoryBlack = #000000;
 //Variables
 color selectedColor = ivoryBlack;
