@@ -460,6 +460,7 @@ void drawStamp(PImage img, boolean isOn) {
   }
 }
 void drawLineOrDots() {
+  strokeWeight(weight);
   if (drawType == 1) {
     line(pmouseX, pmouseY, mouseX, mouseY);
   } else {
