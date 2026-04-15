@@ -3,6 +3,8 @@
 //Sketch Pad
 
 
+//Logo
+PImage icon;
 
 
 //stamp images
@@ -38,6 +40,7 @@ float weight;
 
 void setup() {//setup----------------------------------
   size(1000, 800);
+ 
   background (white);
   pixelDensity(1);
   lemonOn=false;
@@ -52,7 +55,8 @@ void setup() {//setup----------------------------------
   cookie = loadImage("cookie.png");
   star = loadImage("star.png");
   moon = loadImage("moon.png");
-
+surface.setIcon(star);
+surface.setTitle("Star Drawer");
   palette = new color[]{warmYellow, cyan, brightRed, coolYellow, coolBlue, brightOrange, warmGreen, warmBlue, pink, coolGreen, white, ivoryBlack};
   sliderY=400;
 
